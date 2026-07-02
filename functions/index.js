@@ -10,6 +10,9 @@ exports.getChatResponse = onRequest({
     maxInstances: 10,
     cors: true 
 }, async (req, res) => {
+    const apiKey = functions.config().gemini?.api_key || process.env.GEMINI_API_KEY;
+
+    const { prompt } = req.body;
     
     // Check if API key is loaded
     if (!process.env.GEMINI_API_KEY) {
