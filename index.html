@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimmy Wong Jia Cheng | Computer Science Student</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <!-- Aurora Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+    
+    <button id="theme-toggle" aria-label="Toggle Theme"><i class="fas fa-sun"></i></button>
+
+    <!-- Hero Section -->
+    <header class="hero animate-on-scroll">
+      
+        <p class="greeting">Hello, world! I am</p>
+      <img src="./image/profilephoto.jpeg" alt="Jimmy Wong Jia Cheng" class="profile-img">
+        <h1 class="gradient-text">Jimmy Wong Jia Cheng</h1>
+        <h2 class="role-text">I build <span class="typing-text"></span><span class="cursor">|</span></h2>
+        <div class="availability-status">
+            <span class="pulse-dot"></span>
+            <span class="status-text">Available for 3-Month Internship (Starting Oct 2026)</span>
+        </div>
+        <p class="bio">
+            CS undergraduate at UTAR (Graduating Jan 2027). 
+            I build intelligent applications by blending full-stack development, mobile UI (Flutter), and Large Language Models (LLMs).
+        </p>
+
+        <div class="contact-links">
+            <a href="./file/Jimmy Wong Jia Cheng Resume.pdf" download="Jimmy Wong Jia Cheng Resume.pdf" class="btn primary-btn"><i class="fas fa-file-pdf"></i> Download Resume</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jwong0853@gmail.com" target="_blank" class="btn secondary-btn"><i class="fas fa-envelope"></i> Email</a>
+            <a href="https://www.linkedin.com/in/jimmy-wong-jia-cheng-32b722303/" target="_blank" class="btn icon-btn"><i class="fab fa-linkedin"></i>LinkedIn</a>
+            <a href="https://github.com/ChickenGor" target="_blank" class="btn icon-btn"><i class="fab fa-github"></i>Github</a>
+        </div>
+      <div class="github-activity-card animate-on-scroll">
+            <div class="activity-header">
+                <i class="fab fa-github"></i>
+                <span>Live Git Activity</span>
+            </div>
+            <ul id="github-commits" class="commit-list">
+                <li><i class="fas fa-spinner fa-spin"></i> Fetching recent commits...</li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Projects Section -->
+    <section class="portfolio">
+        <h2 class="section-title animate-on-scroll">Featured Projects</h2>
+        
+        <div class="projects-grid">
+            <div class="app-card animate-on-scroll" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>EMERS - Emergency Response App</h3>
+                <p>A cross-platform mobile application utilizing RAG and Machine Learning to power a context-aware AI chatbot assistant during emergencies.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Dart</span>
+                    <span class="tech-tag">Machine Learning</span>
+                    <span class="tech-tag">RAG</span>
+                </div>
+                <div class="card-buttons">
+                    <a href="#" target="_blank" class="btn outline-btn"><i class="fab fa-github"></i> Code</a>
+                    <a href="#" target="_blank" class="btn primary-btn"><i class="fab fa-google-play"></i> Play Store</a>
+                </div>
+            </div>
+
+             <div class="app-card animate-on-scroll" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>Super LLM Agent Assistant</h3>
+                <p>An AI-driven developer tool built to generate app/web code and provide automated debugging features by seamlessly orchestrating multiple LLMs.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">LangChain</span>
+                    <span class="tech-tag">OpenAI API</span>
+                    <span class="tech-tag">Gemini API</span>
+                </div>
+                <div class="card-buttons">
+                    <a href="#" target="_blank" class="btn outline-btn"><i class="fab fa-github"></i> Code</a>
+                    <a href="#" target="_blank" class="btn primary-btn"><i class="fab fa-google-play"></i> Play Store</a>
+                </div>
+            </div>
+
+             <div class="app-card animate-on-scroll" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>PosEmera - POS System</h3>
+                <p>A user-friendly, localized POS system tailored for ordinary hawkers to manage daily sales and inventory effortlessly.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">ReactJS</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Figma</span>
+                </div>
+                <div class="card-buttons">
+                    <a href="#" target="_blank" class="btn outline-btn"><i class="fab fa-github"></i> Code</a>
+                    <a href="#" target="_blank" class="btn primary-btn"><i class="fab fa-google-play"></i> Play Store</a>
+                </div>
+            </div>
+
+             <div class="app-card animate-on-scroll" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>Akumi - App Assistant</h3>
+                <p>A personal development mobile app incorporating customizable habits and daily progress tracking, delivering personalized daily motivations.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Dart</span>
+                    <span class="tech-tag">REST APIs</span>
+                </div>
+                <div class="card-buttons">
+                    <a href="#" target="_blank" class="btn outline-btn"><i class="fab fa-github"></i> Code</a>
+                    <a href="#" target="_blank" class="btn primary-btn"><i class="fab fa-google-play"></i> Play Store</a>
+                </div>
+            </div>
+
+             <div class="app-card animate-on-scroll" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                <h3>MariBus - Transit Tracker</h3>
+                <p>A real-time Malaysia public bus tracking system designed to reduce commuter wait times by parsing live geographic data.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">JSON</span>
+                    <span class="tech-tag">Maps API</span>
+                </div>
+                <div class="card-buttons">
+                    <a href="#" target="_blank" class="btn outline-btn"><i class="fab fa-github"></i> Code</a>
+                    <a href="#" target="_blank" class="btn primary-btn"><i class="fab fa-google-play"></i> Play Store</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills animate-on-scroll">
+        <h2 class="section-title">Technical Arsenal</h2>
+        
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> Languages</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Dart</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-layer-group"></i> Frameworks</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">ReactJS</span>
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">LangChain</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-brain"></i> AI & Cloud</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">LLMs & RAG</span>
+                    <span class="tech-tag">OpenAI API</span>
+                    <span class="tech-tag">Gemini API</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Databases & Tools</h3>
+                <div class="tech-stack">
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Git/GitHub</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Experience Timeline -->
+    <section class="timeline-section animate-on-scroll">
+        <h2 class="section-title">My Journey</h2>
+        
+        <div class="timeline-container">
+            <div class="timeline-column">
+                <h3 class="column-title"><i class="fas fa-graduation-cap"></i> Education</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>Bachelor of Computer Science</h4>
+                    <h5>Universiti Tunku Abdul Rahman (UTAR) Kampar</h5>
+                    <span class="timeline-date">2024 - Expected Jan 2027</span>
+                    <p>Focusing on full-stack web development, mobile apps, and AI/LLM integration.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>STPM in Arts Stream (Accounting)</h4>
+                    <h5>SMK St. Michael's Institution, Ipoh</h5>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>PT3 and SPM in Science Stream</h4>
+                    <h5>SMK Jalan Pasir Puteh, Ipoh</h5>
+                </div>
+            </div>
+
+            <div class="timeline-column">
+                <h3 class="column-title"><i class="fas fa-briefcase"></i> Experience</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>Sales Assistant (Full Time)</h4>
+                    <h5>Neonshine - Adidas Ipoh Parade</h5>
+                    <span class="timeline-date">June 2023 - Jan 2024</span>
+                    <p>Delivered excellent customer service, managed inventory, and optimized store operations in a high-traffic retail environment.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>Sales Assistant (Part Time)</h4>
+                    <h5>Padini Concept Store (AEON Station 18)</h5>
+                    <span class="timeline-date">May 2021 - July 2021</span>
+                    <p>Adapted quickly to dynamic store operations and demonstrated strong teamwork during peak hours.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>Staff (Part Time)</h4>
+                    <h5>Gym First (Pasir Puteh Branch)</h5>
+                    <span class="timeline-date">2018 - 2019</span>
+                    <p>Maintained daily operations and communicated effectively with members to ensure a safe environment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  <div id="chatbot-wrapper">
+        <button id="chatbot-toggle" aria-label="Open AI Assistant">
+            <i class="fas fa-robot"></i>
+        </button>
+
+        <div id="chatbot-window" class="glass-panel hidden">
+            <div class="chat-header">
+                <h3><i class="fas fa-sparkles"></i> Jimmy-Bot AI</h3>
+                <button id="close-chat"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="chat-history">
+                <div class="message ai-message">
+                    Hello! I am Jimmy's AI assistant. Ask me about his Flutter apps, his UTAR degree, or his tech stack!
+                </div>
+            </div>
+            <div class="chat-quick-replies">
+    <button class="chip" onclick="sendQuickReply('Tell me about your projects')">Projects</button>
+    <button class="chip" onclick="sendQuickReply('Are you available?')">Availability</button>
+    <button class="chip" onclick="sendQuickReply('How can I contact you?')">Contact</button>
+</div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about Jimmy...">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+  <div id="terminal-overlay" class="hidden">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span>guest@jimmy-wong:~</span>
+                <button id="close-terminal">X</button>
+            </div>
+            <div id="terminal-output">
+                <p>Welcome to JimmyOS v1.0.0</p>
+                <p>Type <span class="highlight">'help'</span> to see a list of available commands.</p>
+            </div>
+            <div class="terminal-input-line">
+                <span class="prompt">guest@jimmy-wong:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>© 2026 Jimmy Wong Jia Cheng. Built with HTML, CSS & JS.</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
