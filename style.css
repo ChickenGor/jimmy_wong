@@ -28,6 +28,31 @@ body.dark-mode {
     --tag-bg: #334155;
 }
 
+/* =========================================
+   Aurora Scroll Progress Bar
+   ========================================= */
+
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%; /* Starts at 0% when page loads */
+    height: 4px;
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6, #10b981, #8b5cf6);
+    background-size: 200% auto;
+    z-index: 10000; /* Ensures it stays on top of the terminal and chatbot */
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+    animation: gradient-shift 3s linear infinite; /* Makes the colors flow */
+    transition: width 0.1s ease-out; /* Makes the scrolling smooth */
+}
+
+/* Animates the gradient colors to slide sideways */
+@keyframes gradient-shift {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
@@ -123,6 +148,56 @@ body {
     color: var(--text-muted);
     font-size: 1.1rem;
     margin-bottom: 40px;
+}
+
+/* =========================================
+   Pulse Availability Indicator
+   ========================================= */
+
+.availability-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(16, 185, 129, 0.1); /* Very transparent emerald green */
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 8px 18px;
+    border-radius: 50px;
+    margin-bottom: 25px; 
+    margin-top: -10px; /* Pulls it slightly closer to the role text */
+}
+
+.status-text {
+    font-size: 0.9rem;
+    color: #10b981; /* Emerald green text */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.pulse-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    animation: pulse-animation 2s infinite; 
+}
+
+/* The actual heartbeat animation */
+@keyframes pulse-animation {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        /* Expands the shadow outwards and fades it to 0 opacity */
+        box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); 
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
 }
 
 /* Buttons */
@@ -594,6 +669,31 @@ footer {
 }
 
 /* Input Area */
+
+.chat-quick-replies {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    overflow-x: auto; /* Allows scrolling if you add more buttons */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chip {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.chip:hover {
+    background: rgba(14, 165, 233, 0.4);
+    border-color: #0ea5e9;
+}
 .chat-input-area {
     padding: 15px;
     display: flex;
@@ -610,6 +710,12 @@ footer {
     background: var(--bg-color);
     color: var(--text-main);
     outline: none;
+}
+
+.ai-message:contains("Jimmy-Bot is typing...") {
+    font-style: italic;
+    opacity: 0.7;
+    font-size: 0.85rem;
 }
 
 #send-btn {
@@ -836,3 +942,4 @@ body:not(.dark-mode)::before,
 body:not(.dark-mode)::after {
     opacity: 0.15; 
 }
+
