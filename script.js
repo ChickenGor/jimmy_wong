@@ -1,10 +1,30 @@
+const RESUME_CONTENT = `
+Jimmy Wong Jia Cheng - Computer Science Undergraduate (UTAR, Grad Jan 2027)
+Technical Skills:
+- Languages: Python, JavaScript, Dart, Java, C++, PHP
+- Frameworks: ReactJS, Node.js, Flutter, LangChain
+- AI/Cloud: AWS, Prompt Engineering, RAG, Gemini API, OpenAI API
+- Databases: MySQL, MongoDB, Firebase
+- Tools: Git, GitHub, REST APIs, Figma
+
+Project Highlights:
+1. EMERS: Mobile emergency response app using Flutter, RAG, and Machine Learning for fast info retrieval[cite: 18, 19, 21].
+2. Super LLM Agent: AI-driven developer tool using OpenAI/Gemini APIs for automated code generation and debugging[cite: 23, 24, 25].
+3. PosEmera: Full-stack POS system for hawkers using ReactJS, Node.js, and MySQL[cite: 27, 29, 30].
+4. Akumi: Personal development app with AI-driven growth recommendations[cite: 31, 33].
+5. MariBus: Real-time public bus tracking system using live geographic data[cite: 34, 35].
+
+Availability: Seeking final-semester software engineering internship starting October 2026.
+Contact: jwong0853@gmail.com
+`;
+
 // --- 1. Theme Toggle Logic ---
 const themeToggleBtn = document.getElementById('theme-toggle');
 const icon = themeToggleBtn.querySelector('i');
 
 themeToggleBtn.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
-    
+
     // Switch between moon and sun icons
     if (document.body.classList.contains('dark-mode')) {
         icon.classList.remove('fa-moon');
@@ -26,14 +46,14 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             // Add the 'is-visible' class to trigger the CSS animation
             entry.target.classList.add('is-visible');
-            
+
             // Stop observing the element so it doesn't animate again if you scroll up
             observer.unobserve(entry.target);
         }
     });
 }, {
     // Trigger the animation when 15% of the element is visible
-    threshold: 0.15 
+    threshold: 0.15
 });
 
 // Tell the observer to watch every element we selected
@@ -83,6 +103,17 @@ const closeChat = document.getElementById('close-chat');
 const sendBtn = document.getElementById('send-btn');
 const chatInput = document.getElementById('chat-input');
 const chatHistory = document.getElementById('chat-history');
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=YOUR_API_KEYS";
+
+// Define the system instructions at the top so they are available to the function
+const SYSTEM_INSTRUCTION = `You are Jimmy-Bot, the professional AI assistant for Jimmy Wong Jia Cheng.
+Use this specific background information to answer all questions: ${RESUME_CONTENT}
+
+Guidelines:
+- If asked about skills or projects, reference the specific technologies listed in the data.
+- If asked about internship availability, confirm he is seeking a final-semester internship starting October 2026.
+- Maintain a professional, enthusiastic, and concise tone.
+- Always encourage recruiters to reach out to jwong0853@gmail.com.`;
 
 // Open and Close Chat
 chatToggle.addEventListener('click', () => {
@@ -93,53 +124,60 @@ closeChat.addEventListener('click', () => {
     chatWindow.classList.add('hidden');
 });
 
-// Function to add a message to the chat
+// Function to add a message to the chat UI
 function addMessage(text, sender) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message');
     msgDiv.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
     msgDiv.textContent = text;
-    
+
     chatHistory.appendChild(msgDiv);
-    
-    // Auto-scroll to the bottom
     chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
 // Handle sending a message
-function handleSend() {
+async function handleSend() {
     const userText = chatInput.value.trim();
     if (!userText) return;
 
-    // 1. Add user message to UI
     addMessage(userText, 'user');
     chatInput.value = '';
 
-    // 2. Add a temporary "typing..." indicator
+    // 1. Show "Jimmy-Bot is typing..."
     const typingId = "typing-" + Date.now();
     const typingDiv = document.createElement('div');
     typingDiv.classList.add('message', 'ai-message');
     typingDiv.setAttribute('id', typingId);
-    typingDiv.textContent = "...";
+    typingDiv.textContent = "Jimmy-Bot is typing..."; // More professional than "..."
     chatHistory.appendChild(typingDiv);
     chatHistory.scrollTop = chatHistory.scrollHeight;
 
-    // 3. Simulated API Call (Replace this with actual Gemini/OpenAI Fetch later)
-    setTimeout(() => {
-        document.getElementById(typingId).remove();
-        
-        // Mock responses based on keywords
-        let aiResponse = "I'm still learning! But I can tell you Jimmy is a great Software Engineer.";
-        if (userText.toLowerCase().includes("flutter")) {
-            aiResponse = "Jimmy loves Flutter! He built EMERS and Akumi using Flutter and Dart.";
-        } else if (userText.toLowerCase().includes("utar") || userText.toLowerCase().includes("education")) {
-            aiResponse = "Jimmy is a Computer Science undergraduate at UTAR, graduating in Jan 2027.";
-        } else if (userText.toLowerCase().includes("hire") || userText.toLowerCase().includes("intern")) {
-            aiResponse = "He is actively seeking a final-semester software engineering internship! You should email him at jwong0853@gmail.com.";
-        }
+    // 2. Add a small artificial delay so the typing indicator is visible
+    // This makes it feel like the AI is actually "thinking"
+    await new Promise(resolve => setTimeout(resolve, 1200));
 
+    // 3. API Call
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    role: "user",
+                    parts: [{ text: SYSTEM_INSTRUCTION + "\n\nUser Question: " + userText }]
+                }]
+            })
+        });
+
+        const data = await response.json();
+        const aiResponse = data.candidates[0].content.parts[0].text;
+
+        document.getElementById(typingId).remove();
         addMessage(aiResponse, 'ai');
-    }, 1000);
+    } catch (error) {
+        document.getElementById(typingId).remove();
+        addMessage("Jimmy-Bot is currently taking a coffee break. Please email me at jwong0853@gmail.com!", 'ai');
+    }
 }
 
 // Event Listeners for sending
@@ -152,62 +190,77 @@ chatInput.addEventListener('keypress', (e) => {
 
 // --- 5. Live GitHub Activity Fetcher ---
 // Replace 'yourusername' with your actual GitHub username!
-const GITHUB_USERNAME = 'ChickenGor'; 
+const GITHUB_USERNAME = 'ChickenGor';
 const commitsContainer = document.getElementById('github-commits');
 
 async function fetchGitHubActivity() {
-    // Only run if the container exists on the page
-    if (!commitsContainer) return;
+    // 1. Safety check: Look for the element
+    const commitsContainer = document.getElementById('github-commits');
+
+    // If the element doesn't exist on the page, exit immediately to avoid the crash
+    if (!commitsContainer) {
+        console.warn("GitHub commits container not found. Skipping activity fetch.");
+        return;
+    }
 
     try {
-        // Call the public GitHub REST API
-        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`);
-        
-        if (!response.ok) throw new Error('Network response was not ok');
-        
+        const GITHUB_USERNAME = 'ChickenGor';
+        const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`, {
+            headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+
+        if (!response.ok) throw new Error("Could not reach GitHub");
+
         const data = await response.json();
-        
-        // Filter the events to only show "PushEvents" (times you actually pushed code)
-        // and grab the 3 most recent ones
-        const pushEvents = data.filter(event => event.type === 'PushEvent').slice(0, 3);
-        
-        if (pushEvents.length === 0) {
-            commitsContainer.innerHTML = '<li>No recent code pushes found.</li>';
+
+        // Check if data is valid
+        if (!data || !Array.isArray(data) || data.length === 0) {
+            commitsContainer.innerHTML = '<li>No recent activity found.</li>';
             return;
         }
 
-        // Clear the "Loading..." text
-        commitsContainer.innerHTML = ''; 
+        const pushEvents = data.filter(event => event.type === 'PushEvent');
 
-        // Loop through the 3 events and build the HTML
-        pushEvents.forEach(event => {
-            // Clean up the repo name (removes your username from the front)
-            const repoName = event.repo.name.replace(`${GITHUB_USERNAME}/`, '');
-            
-            // Get the commit message (defaults to 'Update' if missing)
-            const commitMsg = event.payload.commits[0]?.message || 'Updated repository';
-            
-            // Format the date nicely
-            const commitDate = new Date(event.created_at).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric' 
-            });
+        if (pushEvents.length === 0) {
+            commitsContainer.innerHTML = '<li>No recent pushes.</li>';
+            return;
+        }
 
-            // Create the list item
-            const listItem = document.createElement('li');
-            listItem.classList.add('commit-item');
-            listItem.innerHTML = `
-                <div class="commit-top-row">
-                    <span class="commit-repo"><i class="fas fa-code-branch"></i> ${repoName}</span>
-                    <span class="commit-date">${commitDate}</span>
-                </div>
-                <span class="commit-message">${commitMsg}</span>
-            `;
-            commitsContainer.appendChild(listItem);
+        // Display the top 3
+        commitsContainer.innerHTML = '';
+        // Inside your fetchGitHubActivity function, replace the forEach loop:
+        pushEvents.slice(0, 3).forEach(event => {
+            // 1. THIS IS THE FIX: Use event.repo.name, not the actor/user name
+            const rawRepoName = event.repo.name;
+            const repoName = rawRepoName.includes('/') ? rawRepoName.split('/')[1] : rawRepoName;
+
+            // 2. Get the actual commit message
+            let commitMsg = event.payload.commits?.[0]?.message || 'Code update';
+            if (commitMsg.length > 25) commitMsg = commitMsg.substring(0, 25) + '...';
+
+            // 3. Format Date AND Time
+            const date = new Date(event.created_at);
+            const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const li = document.createElement('li');
+            li.style.marginBottom = "15px"; // Adds space between items
+            li.innerHTML = `
+        <div style="border-left: 3px solid #0ea5e9; padding-left: 12px;">
+            <strong style="display: block; color: #ffffff; font-size: 1.05rem;">${repoName}</strong>
+            <span style="font-size: 0.9rem; color: #e2e8f0;">${commitMsg}</span>
+            <br><span style="font-size: 0.75rem; opacity: 0.6; color: #cbd5e1;">${dateString} • ${timeString}</span>
+        </div>
+    `;
+            commitsContainer.appendChild(li);
         });
+
     } catch (error) {
-        console.error('Error fetching GitHub data:', error);
-        commitsContainer.innerHTML = '<li>Unable to load recent activity at the moment.</li>';
+        console.error("Error fetching GitHub data:", error);
+        // Only update innerHTML if commitsContainer was successfully found
+        if (commitsContainer) {
+            commitsContainer.innerHTML = '<li>Unable to load activity.</li>';
+        }
     }
 }
 
@@ -238,16 +291,16 @@ closeTerminalBtn.addEventListener('click', () => {
 terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         const command = terminalInput.value.trim().toLowerCase();
-        
+
         // Print the user's command to the screen
         printToTerminal(`guest@jimmy-wong:~$ ${command}`, false);
-        
+
         // Process the command
         processCommand(command);
-        
+
         // Clear the input box
         terminalInput.value = '';
-        
+
         // Scroll to the bottom
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
     }
@@ -264,7 +317,7 @@ function printToTerminal(text, isHtml = false) {
 }
 
 function processCommand(cmd) {
-    switch(cmd) {
+    switch (cmd) {
         case 'help':
             printToTerminal(`Available commands: <br>
             <span class="highlight">whoami</span>   - Learn about me<br>
@@ -280,8 +333,8 @@ function processCommand(cmd) {
             printToTerminal("Core: Python, Dart, JavaScript, Java, C++ <br>Frameworks: Flutter, ReactJS, Node.js, LangChain <br>Data/AI: AWS, Firebase, MySQL, Gemini API, OpenAI API", true);
             break;
         case 'contact':
-    printToTerminal("Email me at: <span class='highlight'>jwong0853@gmail.com</span>", true);
-    break;
+            printToTerminal("Email me at: <span class='highlight'>jwong0853@gmail.com</span>", true);
+            break;
             break;
         case 'clear':
             terminalOutput.innerHTML = '';
@@ -294,4 +347,33 @@ function processCommand(cmd) {
         default:
             printToTerminal(`Command not found: ${cmd}. Type 'help' for a list of commands.`);
     }
+}
+
+// --- 7. Aurora Scroll Progress Bar Logic ---
+const progressBar = document.getElementById('scroll-progress');
+
+window.addEventListener('scroll', () => {
+    // How far down the user has scrolled
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+    // The total height of the webpage minus the window height
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+    // Calculate the percentage
+    const scrollPercentage = (scrollTop / scrollHeight) * 100;
+
+    // Update the width of the progress bar
+    progressBar.style.width = scrollPercentage + '%';
+});
+
+// --- 9. Chatbot Quick Replies ---
+function sendQuickReply(message) {
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    // Set the input value to the chip text
+    chatInput.value = message;
+
+    // Trigger the send button click
+    sendBtn.click();
 }
