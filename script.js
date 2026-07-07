@@ -18,24 +18,7 @@ Availability: Seeking final-semester software engineering internship starting Oc
 Contact: jwong0853@gmail.com
 `;
 
-// --- 1. Theme Toggle Logic ---
-const themeToggleBtn = document.getElementById('theme-toggle');
-const icon = themeToggleBtn.querySelector('i');
-
-themeToggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-
-    // Switch between moon and sun icons
-    if (document.body.classList.contains('dark-mode')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-    }
-});
-
-// --- 2. Scroll Animation Logic ---
+// --- 1. Scroll Animation Logic ---
 // Select all elements that have the 'animate-on-scroll' class
 const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
@@ -69,6 +52,8 @@ let isDeleting = false;
 const typingSpan = document.querySelector('.typing-text');
 
 function typeEffect() {
+    if (!typingSpan) return;
+
     const currentWord = words[wordIndex];
 
     if (isDeleting) {
@@ -82,18 +67,17 @@ function typeEffect() {
     let typingSpeed = isDeleting ? 50 : 100;
 
     if (!isDeleting && charIndex === currentWord.length) {
-        typingSpeed = 2000; // Pause at end of word
+        typingSpeed = 2000;
         isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
         wordIndex = (wordIndex + 1) % words.length;
-        typingSpeed = 500; // Pause before next word
+        typingSpeed = 500;
     }
 
     setTimeout(typeEffect, typingSpeed);
 }
 
-// Start the effect
 document.addEventListener("DOMContentLoaded", typeEffect);
 
 // --- 4. Jimmy-Bot Chatbot Logic ---
@@ -126,7 +110,12 @@ Guidelines:
 
 // Open and Close Chat
 chatToggle.addEventListener('click', () => {
-    chatWindow.classList.remove('hidden');
+    const isHidden = chatWindow.classList.contains('hidden');
+    chatWindow.classList.toggle('hidden', !isHidden);
+
+    if (!chatWindow.classList.contains('hidden')) {
+        chatInput.focus();
+    }
 });
 
 closeChat.addEventListener('click', () => {
