@@ -34,21 +34,30 @@ body.dark-mode {
     position: fixed;
     top: 0;
     left: 0;
-    width: 0%; /* Starts at 0% when page loads */
+    width: 0%;
+    /* Starts at 0% when page loads */
     height: 4px;
     background: linear-gradient(90deg, #8b5cf6, #3b82f6, #10b981, #8b5cf6);
     background-size: 200% auto;
-    z-index: 10000; /* Ensures it stays on top of the terminal and chatbot */
+    z-index: 10000;
+    /* Ensures it stays on top of the terminal and chatbot */
     border-radius: 0 2px 2px 0;
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
-    animation: gradient-shift 3s linear infinite; /* Makes the colors flow */
-    transition: width 0.1s ease-out; /* Makes the scrolling smooth */
+    animation: gradient-shift 3s linear infinite;
+    /* Makes the colors flow */
+    transition: width 0.1s ease-out;
+    /* Makes the scrolling smooth */
 }
 
 /* Animates the gradient colors to slide sideways */
 @keyframes gradient-shift {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
 }
 
 body {
@@ -193,9 +202,26 @@ body {
     line-height: 1.75;
 }
 
-.typing-text { color: var(--primary-accent); }
-.cursor { animation: blink 1s infinite; color: var(--primary-accent); }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.typing-text {
+    color: var(--primary-accent);
+}
+
+.cursor {
+    animation: blink 1s infinite;
+    color: var(--primary-accent);
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
 
 .bio {
     max-width: 600px;
@@ -207,50 +233,107 @@ body {
 /* =========================================
    Pulse Availability Indicator
    ========================================= */
-
-.availability-status {
-    display: inline-flex;
-    align-items: center;
+.tags-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on small screens */
     gap: 12px;
-    background: rgba(16, 185, 129, 0.1); /* Very transparent emerald green */
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    padding: 8px 18px;
-    border-radius: 50px;
-    margin-bottom: 25px; 
-    margin-top: -10px; /* Pulls it slightly closer to the role text */
+    margin: 20px 0;
 }
 
-.status-text {
+/* Updated Badge Style (Sleek pill) */
+.badge {
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px; /* Fully rounded pills */
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e4e4e7;
+    text-transform: uppercase; /* Makes short text look intentional */
+    letter-spacing: 0.025em;
+}
+
+/* Professional Internship Callout */
+.internship-callout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid #22c55e;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.internship-text {
     font-size: 0.9rem;
-    color: #10b981; /* Emerald green text */
+    color: #a1a1aa;
+}
+
+.date-highlight {
+    color: #ffffff;
     font-weight: 600;
-    letter-spacing: 0.5px;
+}
+
+/* Subtle hover effect to add interactivity */
+.badge:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .pulse-dot {
-    width: 12px;
-    height: 12px;
-    background-color: #10b981;
+    width: 8px;
+    height: 8px;
+    background-color: #22c55e;
     border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-    animation: pulse-animation 2s infinite; 
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    animation: pulse-animation 2s infinite;
 }
 
-/* The actual heartbeat animation */
+
 @keyframes pulse-animation {
     0% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
     }
+
     70% {
         transform: scale(1);
-        /* Expands the shadow outwards and fades it to 0 opacity */
-        box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); 
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
     }
+
     100% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+.pulse-dot::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border-radius: 50%;
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(2);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
     }
 }
 
@@ -277,7 +360,7 @@ body {
     width: 100%;
     max-width: 600px;
     text-align: left;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .activity-header {
@@ -380,12 +463,14 @@ body {
     transform: translateY(-2px);
 }
 
-.secondary-btn, .outline-btn {
+.secondary-btn,
+.outline-btn {
     background: transparent;
     color: var(--text-main);
 }
 
-.secondary-btn:hover, .outline-btn:hover {
+.secondary-btn:hover,
+.outline-btn:hover {
     border-color: var(--primary-accent);
     color: var(--primary-accent);
     transform: translateY(-2px);
@@ -436,6 +521,39 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
+}
+
+.status-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.status-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #3b3939;
+    border-radius: 4px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.status-bar-fill {
+    height: 100%;
+    background-color: #e510f0;
+    /* Adjust color as needed */
+    width: 40%;
+    /* Change this percentage to reflect progress */
+    transition: width 0.5s ease-in-out;
+}
+
+.status-percentage {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fb71f4;
+    min-width: 35px;
+    /* Ensures text doesn't jitter as numbers change */
 }
 
 .app-card {
@@ -723,7 +841,7 @@ body {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
     display: flex;
     justify-content: center;
@@ -749,7 +867,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     transition: opacity 0.3s ease, transform 0.3s ease;
     transform-origin: bottom right;
 }
@@ -820,7 +938,8 @@ body {
     display: flex;
     gap: 8px;
     padding: 10px;
-    overflow-x: auto; /* Allows scrolling if you add more buttons */
+    overflow-x: auto;
+    /* Allows scrolling if you add more buttons */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -840,6 +959,7 @@ body {
     background: rgba(14, 165, 233, 0.4);
     border-color: #0ea5e9;
 }
+
 .chat-input-area {
     padding: 15px;
     display: flex;
@@ -998,11 +1118,12 @@ body {
     background: #1e1e1e;
     border: 1px solid #333;
     border-radius: 8px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    font-family: 'Courier New', Courier, monospace; /* Classic Terminal Font */
+    font-family: 'Courier New', Courier, monospace;
+    /* Classic Terminal Font */
 }
 
 .terminal-header {
@@ -1036,7 +1157,8 @@ body {
 #terminal-output {
     flex-grow: 1;
     padding: 20px;
-    color: #00ff00; /* Hacker Green */
+    color: #00ff00;
+    /* Hacker Green */
     overflow-y: auto;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -1072,14 +1194,16 @@ body {
    Responsive Design (Mobile & Tablet)
 ========================================= */
 @media screen and (max-width: 768px) {
-    
+
     /* 1. Tighten up spacing to save screen real estate */
     .hero {
         min-height: auto;
         padding: 100px 15px 40px;
     }
 
-    .portfolio, .skills, .timeline-section {
+    .portfolio,
+    .skills,
+    .timeline-section {
         padding: 40px 15px 60px;
     }
 
@@ -1110,7 +1234,8 @@ body {
 
     .btn {
         width: 100%;
-        justify-content: center; /* Centers the icon and text */
+        justify-content: center;
+        /* Centers the icon and text */
     }
 
     /* 5. Adjust the Timeline into a perfect single column */
@@ -1168,7 +1293,7 @@ body::after {
     filter: blur(110px);
     opacity: 0.16;
     pointer-events: none;
-    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
     bottom: -8%;
     left: -6%;
 }

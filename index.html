@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,15 +8,18 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="premium-style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet" />
 </head>
+
 <body>
     <div class="page-glow glow-one"></div>
     <div class="page-glow glow-two"></div>
     <div class="page-grid"></div>
 
     <header class="site-header">
-        <a href="#about" class="brand">JimmyWong</a>
+        <a href="#about" class="brand">Jimmy Wong</a>
         <button class="nav-toggle" aria-label="Toggle navigation">
             <span></span>
             <span></span>
@@ -34,12 +38,25 @@
         <section class="hero section animate-on-scroll" id="about">
             <div class="hero-copy">
                 <p class="eyebrow">Hello, I'm</p>
+
                 <h1>Jimmy Wong Jia Cheng</h1>
-                <div class="hero-badges">
-                    <span>Computer Science Student</span>
-                    <span>Available for Internships</span>
-                    <span>Full Stack Engineer</span>
+                <div class="internship-callout">
+                    <div class="internship-text">
+                        Available for 3-month internship:
+                        <span class="date-highlight">Oct 19, 2026 – Jan 16, 2027</span>
+                    </div>
                 </div>
+
+                <div class="tags-container">
+                    <span class="badge">Computer Science Student</span>
+                    <span class="badge">Web Developer</span>
+                    <span class="badge">Mobile App Engineer</span>
+                </div>
+
+
+
+
+
                 <p class="hero-lead">Building intelligent software, AI workflows, and modern web experiences.</p>
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -62,13 +79,26 @@
             <div class="about-grid">
                 <div class="about-copy">
                     <h3>Designing thoughtful digital products with AI at the core.</h3>
-                    <p>I'm a Computer Science undergraduate at UTAR, graduating January 2027, building practical products that turn emerging AI capabilities into meaningful human-centered experiences.</p>
+                    <p>I'm a Computer Science undergraduate at UTAR, graduating January 2027, building practical
+                        products that turn emerging AI capabilities into meaningful human-centered experiences.</p>
                 </div>
                 <div class="about-card">
-                    <p><strong>Current studies</strong><br />Computer Science undergraduate at UTAR, focusing on full-stack development, mobile applications, and AI/LLM integration.</p>
-                    <p><strong>Interests</strong><br />Mobile apps, AI workflows, product thinking, and creating elegant digital tools.</p>
-                    <p><strong>Goals</strong><br />To build impactful software, grow as a developer, and contribute to meaningful products.</p>
+                    <p><strong>Current studies</strong><br />Computer Science undergraduate at UTAR, focusing on
+                        full-stack development, mobile applications, and AI/LLM integration.</p>
+                    <p><strong>Interests</strong><br />Mobile apps, AI workflows, product thinking, and creating elegant
+                        digital tools.</p>
+                    <p><strong>Goals</strong><br />To build impactful software, grow as a developer, and contribute to
+                        meaningful products.</p>
                 </div>
+            </div>
+            <div class="github-activity-card">
+                <div class="activity-header">
+                    <i class="fab fa-github"></i>
+                    <span>Recent Public GitHub Activity</span>
+                </div>
+                <ul id="github-commits" class="commit-list">
+                    <li>Loading recent activity…</li>
+                </ul>
             </div>
         </section>
 
@@ -83,10 +113,17 @@
                     <div class="project-media media-one"></div>
                     <div class="project-content">
                         <div class="project-topline">
-                            <span class="badge unreleased">Unreleased</span>
+                            <span class="badge unreleased">FYP 2 Development</span>
                         </div>
                         <h3>EMERS - Emergency Response App</h3>
-                        <p>An emergency response app that helps people access critical information through conversational AI during high-pressure moments.</p>
+                        <div class="status-wrapper">
+                            <div class="status-bar-container">
+                                <div class="status-bar-fill" style="width: 50%;"></div>
+                            </div>
+                            <span class="status-percentage">50%</span>
+                        </div>
+                        <p>An emergency response app that helps people access critical information through
+                            conversational AI during high-pressure moments.</p>
                         <div class="tag-row">
                             <span>Flutter</span><span>Dart</span><span>Machine Learning</span><span>RAG</span>
                         </div>
@@ -101,10 +138,17 @@
                     <div class="project-media media-two"></div>
                     <div class="project-content">
                         <div class="project-topline">
-                            <span class="badge unreleased">Unreleased</span>
+                            <span class="badge unreleased">In Progress</span>
                         </div>
                         <h3>Super LLM Agent Assistant</h3>
-                        <p>A developer-focused assistant that automates parts of app and web development workflows with LLM orchestration.</p>
+                        <div class="status-wrapper">
+                            <div class="status-bar-container">
+                                <div class="status-bar-fill" style="width: 10%;"></div>
+                            </div>
+                            <span class="status-percentage">10%</span>
+                        </div>
+                        <p>A developer-focused assistant that automates parts of app and web development workflows with
+                            LLM orchestration.</p>
                         <div class="tag-row">
                             <span>Python</span><span>LangChain</span><span>OpenAI API</span><span>Gemini API</span>
                         </div>
@@ -122,7 +166,14 @@
                             <span class="badge released">Released</span>
                         </div>
                         <h3>PosEmera - POS System</h3>
-                        <p>A localized POS platform designed to simplify daily operations for hawkers and small retailers.</p>
+                        <div class="status-wrapper">
+                            <div class="status-bar-container">
+                                <div class="status-bar-fill" style="width: 100%;"></div>
+                            </div>
+                            <span class="status-percentage">100%</span>
+                        </div>
+                        <p>A localized POS platform designed to simplify daily operations for hawkers and small
+                            retailers.</p>
                         <div class="tag-row">
                             <span>ReactJS</span><span>Node.js</span><span>MySQL</span><span>Figma</span>
                         </div>
@@ -137,10 +188,17 @@
                     <div class="project-media media-four"></div>
                     <div class="project-content">
                         <div class="project-topline">
-                            <span class="badge unreleased">Unreleased</span>
+                            <span class="badge unreleased">In Development</span>
                         </div>
                         <h3>Akumi - App Assistant</h3>
-                        <p>A habit and self-improvement app that turns daily routines into measurable personal progress.</p>
+                        <div class="status-wrapper">
+                            <div class="status-bar-container">
+                                <div class="status-bar-fill" style="width: 20%;"></div>
+                            </div>
+                            <span class="status-percentage">20%</span>
+                        </div>
+                        <p>A habit and self-improvement app that turns daily routines into measurable personal progress.
+                        </p>
                         <div class="tag-row">
                             <span>Flutter</span><span>Dart</span><span>REST APIs</span>
                         </div>
@@ -158,7 +216,14 @@
                             <span class="badge unreleased">Unreleased</span>
                         </div>
                         <h3>MariBus - Transit Tracker</h3>
-                        <p>A public transit tracker that makes commuting more predictable with live location-aware updates.</p>
+                        <div class="status-wrapper">
+                            <div class="status-bar-container">
+                                <div class="status-bar-fill" style="width: 70%;"></div>
+                            </div>
+                            <span class="status-percentage">70%</span>
+                        </div>
+                        <p>A public transit tracker that makes commuting more predictable with live location-aware
+                            updates.</p>
                         <div class="tag-row">
                             <span>JavaScript</span><span>JSON</span><span>Maps API</span>
                         </div>
@@ -237,7 +302,8 @@
                     <div class="timeline-card">
                         <h3>Sales Assistant</h3>
                         <p>Padini Concept Store, AEON Station 18</p>
-                        <span>Adapted quickly in a dynamic retail environment and collaborated closely with the team.</span>
+                        <span>Adapted quickly in a dynamic retail environment and collaborated closely with the
+                            team.</span>
                     </div>
                 </div>
             </div>
@@ -247,21 +313,17 @@
             <p class="eyebrow">Contact</p>
             <h2>Let's build something great.</h2>
             <div class="contact-actions">
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jwong0853@gmail.com" target="_blank" class="btn btn-outline"><i class="fas fa-envelope"></i> Email</a>
-                <a href="https://github.com/ChickenGor" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://www.linkedin.com/in/jimmy-wong-jia-cheng-32b722303/" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="./file/Jimmy Wong Jia Cheng Resume.pdf" download="Jimmy Wong Jia Cheng Resume.pdf" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Download Resume</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jwong0853@gmail.com" target="_blank"
+                    class="btn btn-outline"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://github.com/ChickenGor" target="_blank" class="btn btn-outline"><i
+                        class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/jimmy-wong-jia-cheng-32b722303/" target="_blank"
+                    class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="./file/Jimmy Wong Jia Cheng Resume.pdf" download="Jimmy Wong Jia Cheng Resume.pdf"
+                    class="btn btn-primary"><i class="fas fa-file-pdf"></i> Download Resume</a>
             </div>
 
-            <div class="github-activity-card">
-                <div class="activity-header">
-                    <i class="fab fa-github"></i>
-                    <span>Recent Public GitHub Activity</span>
-                </div>
-                <ul id="github-commits" class="commit-list">
-                    <li>Loading recent activity…</li>
-                </ul>
-            </div>
+
         </section>
     </main>
 
@@ -302,5 +364,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
     <script src="premium-script.js"></script>
+
+
 </body>
+
 </html>
