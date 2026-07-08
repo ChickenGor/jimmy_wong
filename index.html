@@ -33,17 +33,17 @@
     <main>
         <section class="hero section animate-on-scroll" id="about">
             <div class="hero-copy">
-                <p class="eyebrow">Hello, I�m</p>
+                <p class="eyebrow">Hello, I'm</p>
                 <h1>Jimmy Wong Jia Cheng</h1>
                 <div class="hero-badges">
                     <span>Computer Science Student</span>
-                    <span>AI Developer</span>
+                    <span>Available for Internships</span>
                     <span>Full Stack Engineer</span>
                 </div>
                 <p class="hero-lead">Building intelligent software, AI workflows, and modern web experiences.</p>
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="#contact" class="btn btn-outline">Let�s Connect</a>
+                    <a href="#contact" class="btn btn-outline">Let's Connect</a>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
             <div class="about-grid">
                 <div class="about-copy">
                     <h3>Designing thoughtful digital products with AI at the core.</h3>
-                    <p>I�m a Computer Science undergraduate at UTAR, graduating January 2027, building practical products that turn emerging AI capabilities into meaningful human-centered experiences.</p>
+                    <p>I'm a Computer Science undergraduate at UTAR, graduating January 2027, building practical products that turn emerging AI capabilities into meaningful human-centered experiences.</p>
                 </div>
                 <div class="about-card">
                     <p><strong>Current studies</strong><br />Computer Science undergraduate at UTAR, focusing on full-stack development, mobile applications, and AI/LLM integration.</p>
@@ -245,19 +245,59 @@
 
         <section class="contact section animate-on-scroll" id="contact">
             <p class="eyebrow">Contact</p>
-            <h2>Let�s build something great.</h2>
+            <h2>Let's build something great.</h2>
             <div class="contact-actions">
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jwong0853@gmail.com" target="_blank" class="btn btn-outline"><i class="fas fa-envelope"></i> Email</a>
                 <a href="https://github.com/ChickenGor" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
                 <a href="https://www.linkedin.com/in/jimmy-wong-jia-cheng-32b722303/" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 <a href="./file/Jimmy Wong Jia Cheng Resume.pdf" download="Jimmy Wong Jia Cheng Resume.pdf" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Download Resume</a>
             </div>
+
+            <div class="github-activity-card">
+                <div class="activity-header">
+                    <i class="fab fa-github"></i>
+                    <span>Recent Public GitHub Activity</span>
+                </div>
+                <ul id="github-commits" class="commit-list">
+                    <li>Loading recent activity…</li>
+                </ul>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>� 2026 Jimmy Wong Jia Cheng. Built with HTML, CSS & JS.</p>
+        <p>@2026 Jimmy Wong Jia Cheng. Built with HTML, CSS & JS.</p>
     </footer>
+
+    <div id="chatbot-wrapper">
+        <button id="chatbot-toggle" aria-label="Open Jimmy-Bot">
+            <i class="fas fa-robot"></i>
+        </button>
+
+        <div id="chatbot-window" class="hidden">
+            <div class="chat-header">
+                <h3>Jimmy-Bot</h3>
+                <button id="close-chat" aria-label="Close chat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="chat-quick-replies">
+                <button class="chip" onclick="sendQuickReply('Tell me about your projects')">Projects</button>
+                <button class="chip" onclick="sendQuickReply('What skills do you have?')">Skills</button>
+                <button class="chip" onclick="sendQuickReply('Are you available for internships?')">Internships</button>
+            </div>
+
+            <div id="chat-history"></div>
+
+            <div class="chat-input-area">
+                <input id="chat-input" type="text" placeholder="Ask Jimmy-Bot..." />
+                <button id="send-btn" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>

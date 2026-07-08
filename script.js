@@ -87,16 +87,21 @@ const closeChat = document.getElementById('close-chat');
 const sendBtn = document.getElementById('send-btn');
 const chatInput = document.getElementById('chat-input');
 const chatHistory = document.getElementById('chat-history');
-const API_URL = "https://getchatresponse-lwitnzyyvq-uc.a.run.app";
+const API_URL = 'https://us-central1-jimmy-wong-portfolio.cloudfunctions.net/getChatResponse';
 
 async function getAIResponse(userPrompt) {
     const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: userPrompt }),
     });
+
+    if (!response.ok) {
+        throw new Error('AI service request failed');
+    }
+
     const data = await response.json();
-    return data.candidates[0].content.parts[0].text;
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'I could not generate a response right now.';
 }
 // Define the system instructions at the top so they are available to the function
 const SYSTEM_INSTRUCTION = `You are Jimmy-Bot, the professional AI assistant for Jimmy Wong Jia Cheng.
@@ -109,18 +114,22 @@ Guidelines:
 - Always encourage recruiters to reach out to jwong0853@gmail.com.`;
 
 // Open and Close Chat
-chatToggle.addEventListener('click', () => {
-    const isHidden = chatWindow.classList.contains('hidden');
-    chatWindow.classList.toggle('hidden', !isHidden);
+if (chatToggle && chatWindow && chatInput) {
+    chatToggle.addEventListener('click', () => {
+        const isHidden = chatWindow.classList.contains('hidden');
+        chatWindow.classList.toggle('hidden', !isHidden);
 
-    if (!chatWindow.classList.contains('hidden')) {
-        chatInput.focus();
-    }
-});
+        if (!chatWindow.classList.contains('hidden')) {
+            chatInput.focus();
+        }
+    });
+}
 
-closeChat.addEventListener('click', () => {
-    chatWindow.classList.add('hidden');
-});
+if (closeChat && chatWindow) {
+    closeChat.addEventListener('click', () => {
+        chatWindow.classList.add('hidden');
+    });
+}
 
 // Function to add a message to the chat UI
 function addMessage(text, sender) {
@@ -135,6 +144,8 @@ function addMessage(text, sender) {
 
 // Handle sending a message
 async function handleSend() {
+    if (!chatInput || !chatHistory) return;
+
     const userText = chatInput.value.trim();
     if (!userText) return;
 
@@ -156,19 +167,7 @@ async function handleSend() {
 
     // 3. API Call
     try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{
-                    role: "user",
-                    parts: [{ text: SYSTEM_INSTRUCTION + "\n\nUser Question: " + userText }]
-                }]
-            })
-        });
-
-        const data = await response.json();
-        const aiResponse = data.candidates[0].content.parts[0].text;
+        const aiResponse = await getAIResponse(SYSTEM_INSTRUCTION + "\n\nUser Question: " + userText);
 
         document.getElementById(typingId).remove();
         addMessage(aiResponse, 'ai');
@@ -179,12 +178,17 @@ async function handleSend() {
 }
 
 // Event Listeners for sending
-sendBtn.addEventListener('click', handleSend);
-chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        handleSend();
-    }
-});
+if (sendBtn) {
+    sendBtn.addEventListener('click', handleSend);
+}
+
+if (chatInput) {
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleSend();
+        }
+    });
+}
 
 // --- 5. Live GitHub Activity Fetcher ---
 // Replace 'yourusername' with your actual GitHub username!
@@ -226,27 +230,42 @@ async function fetchGitHubActivity() {
 
         // Display the top 3
         commitsContainer.innerHTML = '';
-        // Inside your fetchGitHubActivity function, replace the forEach loop:
         pushEvents.slice(0, 3).forEach(event => {
-            // 1. THIS IS THE FIX: Use event.repo.name, not the actor/user name
-            const rawRepoName = event.repo.name;
+            const rawRepoName = event.repo?.name || 'Repository';
             const repoName = rawRepoName.includes('/') ? rawRepoName.split('/')[1] : rawRepoName;
 
-            // 2. Get the actual commit message
-            let commitMsg = event.payload.commits?.[0]?.message || 'Code update';
-            if (commitMsg.length > 25) commitMsg = commitMsg.substring(0, 25) + '...';
+            const commitMessages = (event.payload?.commits || [])
+                .map(commit => commit?.message)
+                .filter(Boolean)
+                .map(message => message.replace(/\s+/g, ' ').trim());
 
-            // 3. Format Date AND Time
+            let activityText = '';
+
+            if (commitMessages.length > 0) {
+                activityText = commitMessages[0];
+            }
+
+            if (!activityText) {
+                const commitCount = event.payload?.distinct_size || 1;
+                activityText = commitCount > 1
+                    ? `Pushed ${commitCount} updates to ${repoName}`
+                    : `Pushed a fresh update to ${repoName}`;
+            }
+
+            if (activityText.length > 36) {
+                activityText = activityText.substring(0, 33) + '...';
+            }
+
             const date = new Date(event.created_at);
             const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
             const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
             const li = document.createElement('li');
-            li.style.marginBottom = "15px"; // Adds space between items
+            li.style.marginBottom = "15px";
             li.innerHTML = `
         <div style="border-left: 3px solid #0ea5e9; padding-left: 12px;">
             <strong style="display: block; color: #ffffff; font-size: 1.05rem;">${repoName}</strong>
-            <span style="font-size: 0.9rem; color: #e2e8f0;">${commitMsg}</span>
+            <span style="font-size: 0.9rem; color: #e2e8f0;">${activityText}</span>
             <br><span style="font-size: 0.75rem; opacity: 0.6; color: #cbd5e1;">${dateString} • ${timeString}</span>
         </div>
     `;
@@ -273,7 +292,7 @@ const closeTerminalBtn = document.getElementById('close-terminal');
 
 // 1. Listen for the Backtick (`) key to open the terminal
 document.addEventListener('keydown', (e) => {
-    if (e.key === '`') {
+    if (e.key === '`' && terminalOverlay && terminalInput) {
         terminalOverlay.classList.remove('hidden');
         terminalInput.focus(); // Automatically put the cursor in the input box
         e.preventDefault(); // Stop the backtick from actually typing into the box
@@ -281,30 +300,36 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Close button logic
-closeTerminalBtn.addEventListener('click', () => {
-    terminalOverlay.classList.add('hidden');
-});
+if (closeTerminalBtn && terminalOverlay) {
+    closeTerminalBtn.addEventListener('click', () => {
+        terminalOverlay.classList.add('hidden');
+    });
+}
 
 // 2. Handle Terminal Commands
-terminalInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        const command = terminalInput.value.trim().toLowerCase();
+if (terminalInput && terminalOutput) {
+    terminalInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const command = terminalInput.value.trim().toLowerCase();
 
-        // Print the user's command to the screen
-        printToTerminal(`guest@jimmy-wong:~$ ${command}`, false);
+            // Print the user's command to the screen
+            printToTerminal(`guest@jimmy-wong:~$ ${command}`, false);
 
-        // Process the command
-        processCommand(command);
+            // Process the command
+            processCommand(command);
 
-        // Clear the input box
-        terminalInput.value = '';
+            // Clear the input box
+            terminalInput.value = '';
 
-        // Scroll to the bottom
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-    }
-});
+            // Scroll to the bottom
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+    });
+}
 
 function printToTerminal(text, isHtml = false) {
+    if (!terminalOutput) return;
+
     const p = document.createElement('p');
     if (isHtml) {
         p.innerHTML = text;
@@ -351,6 +376,8 @@ function processCommand(cmd) {
 const progressBar = document.getElementById('scroll-progress');
 
 window.addEventListener('scroll', () => {
+    if (!progressBar) return;
+
     // How far down the user has scrolled
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 
@@ -368,6 +395,8 @@ window.addEventListener('scroll', () => {
 function sendQuickReply(message) {
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
+
+    if (!chatInput || !sendBtn) return;
 
     // Set the input value to the chip text
     chatInput.value = message;
