@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 :root {
@@ -60,12 +60,19 @@ body.dark-mode {
     }
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling safely on all devices */
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
     transition: background-color 0.4s ease, color 0.4s ease;
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
 .top-nav {
@@ -89,6 +96,15 @@ body {
 .top-nav a:hover {
     opacity: 1;
     color: var(--primary-accent);
+}
+
+.site-nav a{
+    font-family: 'Space Grotesk', sans-serif;
+
+}
+
+.hero-actions a{
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 #theme-toggle {
