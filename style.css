@@ -1040,24 +1040,40 @@ body {
     }
 }
 
+/* =========================================
+   Smartphone Chat Optimization (max-width: 480px)
+========================================= */
 @media (max-width: 480px) {
     #chatbot-wrapper {
         bottom: 12px;
         right: 12px;
         left: 12px;
+        /* Ensures wrapper doesn't block clicks when chat is closed */
+        pointer-events: none; 
+    }
+
+    /* Re-enable pointer events for the actual interactive elements */
+    #chatbot-toggle, 
+    #chatbot-window {
+        pointer-events: auto;
     }
 
     #chatbot-window {
-        width: calc(100vw - 24px);
-        height: min(78vh, 520px);
-        bottom: 70px;
+        /* Use 100% of the wrapper width instead of fighting vw math */
+        width: 100%;
+        /* dvh (dynamic viewport height) shrinks automatically when the mobile keyboard opens */
+        height: min(75dvh, 500px);
+        max-height: calc(100dvh - 90px);
+        bottom: 68px;
         right: 0;
-        left: auto;
+        left: 0;
         border-radius: 16px;
+        /* Prevent background page scrolling when scrolling chat history */
+        overscroll-behavior: contain; 
     }
 
     .chat-header {
-        padding: 12px 14px;
+        padding: 14px 16px;
     }
 
     .chat-header h3 {
@@ -1070,19 +1086,33 @@ body {
     }
 
     .message {
-        max-width: 95%;
-        padding: 9px 12px;
-        font-size: 0.85rem;
+        max-width: 90%;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        line-height: 1.4;
     }
 
+    /* 1. CRITICAL: Enforce 16px to prevent iOS Safari auto-zoom */
+    #chat-input {
+        font-size: 16px !important; 
+        padding: 12px 14px;
+    }
+
+    /* 2. Expand Quick Replies for ergonomic thumb-tapping */
     .chat-quick-replies {
-        padding: 8px 10px;
-        gap: 6px;
+        padding: 10px;
+        gap: 8px;
+        /* Allow horizontal swiping if chips overflow */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .chip {
-        padding: 5px 10px;
-        font-size: 0.74rem;
+        /* Minimum 38-44px touch height */
+        padding: 10px 14px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 }
 
@@ -1261,6 +1291,79 @@ body {
 
     .card-buttons .btn {
         width: 100%;
+    }
+}
+
+/* =========================================
+   Smartphone Optimization (max-width: 480px)
+========================================= */
+@media screen and (max-width: 480px) {
+
+    /* 1. Prevent horizontal scrolling and handle iPhone notches/safe areas */
+    body {
+        overflow-x: hidden;
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    /* 2. Ultra-compact hero section for small screens */
+    .hero {
+        padding: 80px 12px 30px;
+    }
+
+    .portfolio,
+    .skills,
+    .timeline-section {
+        padding: 30px 12px 45px;
+    }
+
+    /* 3. Scale profile photo and typography for narrower viewports */
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .role-text {
+        font-size: 1.1rem;
+    }
+
+    .bio {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+
+    /* 4. Enforce iOS/Android Accessibility Touch Targets (min 48x48px) */
+    .btn, 
+    .card-buttons .btn,
+    button, 
+    a.button {
+        min-height: 48px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 5. Thumb-Friendly Theme Toggle (Moved slightly lower for easier thumb reach) */
+    #theme-toggle {
+        top: 12px;
+        right: 12px;
+        width: 48px;
+        height: 48px;
+    }
+
+    /* 6. Prevent iOS Auto-Zoom on Form Inputs */
+    input, 
+    select, 
+    textarea {
+        font-size: 16px !important; /* iOS zooms in if font is under 16px */
+    }
+
+    /* 7. Timeline compacting */
+    .timeline-container {
+        gap: 20px;
     }
 }
 
