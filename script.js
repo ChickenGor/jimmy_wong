@@ -69,6 +69,13 @@ const chatInput = document.getElementById('chat-input');
 const chatHistory = document.getElementById('chat-history');
 const API_URL = 'https://jimmy-wong.vercel.app/api/chat';
 
+function setChatOpen(isOpen) {
+    if (!chatWindow) return;
+
+    chatWindow.classList.toggle('hidden', !isOpen);
+    document.body.classList.toggle('chat-open', isOpen);
+}
+
 async function getAIResponse(userPrompt) {
     const response = await fetch(API_URL, {
         method: 'POST',
@@ -87,9 +94,9 @@ async function getAIResponse(userPrompt) {
 if (chatToggle && chatWindow && chatInput) {
     chatToggle.addEventListener('click', () => {
         const isHidden = chatWindow.classList.contains('hidden');
-        chatWindow.classList.toggle('hidden', !isHidden);
+        setChatOpen(isHidden);
 
-        if (!chatWindow.classList.contains('hidden')) {
+        if (isHidden && !window.matchMedia('(max-width: 480px)').matches) {
             chatInput.focus();
         }
     });
@@ -97,9 +104,13 @@ if (chatToggle && chatWindow && chatInput) {
 
 if (closeChat && chatWindow) {
     closeChat.addEventListener('click', () => {
-        chatWindow.classList.add('hidden');
+        setChatOpen(false);
     });
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setChatOpen(false);
+});
 
 // Function to add a message to the chat UI
 function addMessage(text, sender) {
