@@ -161,93 +161,109 @@ if (chatInput) {
 }
 
 // --- 5. Live GitHub Activity Fetcher ---
-// Replace 'yourusername' with your actual GitHub username!
 const GITHUB_USERNAME = 'ChickenGor';
-const commitsContainer = document.getElementById('github-commits');
 
-async function fetchGitHubActivity() {
-    // 1. Safety check: Look for the element
-    const commitsContainer = document.getElementById('github-commits');
+function getRepoName(event) {
+    const fullName = event.repo?.name || 'Repository';
+    return fullName.includes('/') ? fullName.split('/')[1] : fullName;
+}
 
-    // If the element doesn't exist on the page, exit immediately to avoid the crash
-    if (!commitsContainer) {
-        console.warn("GitHub commits container not found. Skipping activity fetch.");
-        return;
+async function getPushMessage(event) {
+    const embeddedMessage = event.payload?.commits?.[0]?.message;
+    if (embeddedMessage) return embeddedMessage;
+
+    const headSha = event.payload?.head;
+    const repo = event.repo?.name;
+    if (!headSha || !repo) return null;
+
+    const response = await fetch(`https://api.github.com/repos/${repo}/commits/${headSha}`);
+    if (!response.ok) return null;
+
+    const commit = await response.json();
+    return commit.commit?.message || null;
+}
+
+async function describeGithubEvent(event) {
+    const repoName = getRepoName(event);
+
+    if (event.type === 'PushEvent') {
+        const message = await getPushMessage(event);
+        if (message) return message.replace(/\s+/g, ' ').trim();
+
+        const count = event.payload?.distinct_size || 1;
+        return `Pushed ${count} commit${count === 1 ? '' : 's'} to ${repoName}`;
     }
 
+    if (event.type === 'CreateEvent') {
+        return `Created ${event.payload?.ref_type || 'a repository'}${event.payload?.ref ? ` “${event.payload.ref}”` : ''}`;
+    }
+
+    if (event.type === 'ReleaseEvent') {
+        return `Published ${event.payload?.release?.tag_name || 'a new release'}`;
+    }
+
+    if (event.type === 'PullRequestEvent') {
+        return `${event.payload?.action || 'Updated'} pull request #${event.payload?.number || ''}`.trim();
+    }
+
+    if (event.type === 'IssuesEvent') {
+        return `${event.payload?.action || 'Updated'} issue #${event.payload?.issue?.number || ''}`.trim();
+    }
+
+    return event.type.replace('Event', '');
+}
+
+function createActivityItem(event, message) {
+    const date = new Date(event.created_at);
+    const dateString = date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+    const timeString = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+    const li = document.createElement('li');
+    const repo = document.createElement('strong');
+    const activity = document.createElement('span');
+    const timestamp = document.createElement('span');
+
+    li.className = 'commit-item';
+    repo.className = 'commit-repo';
+    activity.className = 'commit-message';
+    timestamp.className = 'commit-date';
+    repo.textContent = getRepoName(event);
+    activity.textContent = message;
+    timestamp.textContent = `${dateString} • ${timeString}`;
+
+    li.append(repo, activity, timestamp);
+    return li;
+}
+
+async function fetchGitHubActivity() {
+    const commitsContainer = document.getElementById('github-commits');
+    if (!commitsContainer) return;
+
     try {
-        const GITHUB_USERNAME = 'ChickenGor';
         const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`, {
-            headers: { 'Accept': 'application/vnd.github.v3+json' }
+            headers: {'Accept': 'application/vnd.github.v3+json'},
         });
+        if (!response.ok) throw new Error('Could not reach GitHub');
 
-        if (!response.ok) throw new Error("Could not reach GitHub");
-
-        const data = await response.json();
-
-        // Check if data is valid
-        if (!data || !Array.isArray(data) || data.length === 0) {
-            commitsContainer.innerHTML = '<li>No recent activity found.</li>';
+        const events = await response.json();
+        if (!Array.isArray(events) || events.length === 0) {
+            commitsContainer.textContent = 'No recent activity found.';
             return;
         }
 
-        const pushEvents = data.filter(event => event.type === 'PushEvent');
+        const recentEvents = events
+            .filter((event) => ['PushEvent', 'CreateEvent', 'ReleaseEvent', 'PullRequestEvent', 'IssuesEvent'].includes(event.type))
+            .slice(0, 3);
 
-        if (pushEvents.length === 0) {
-            commitsContainer.innerHTML = '<li>No recent pushes.</li>';
+        if (recentEvents.length === 0) {
+            commitsContainer.textContent = 'No recent activity found.';
             return;
         }
 
-        // Display the top 3
-        commitsContainer.innerHTML = '';
-        pushEvents.slice(0, 3).forEach(event => {
-            const rawRepoName = event.repo?.name || 'Repository';
-            const repoName = rawRepoName.includes('/') ? rawRepoName.split('/')[1] : rawRepoName;
-
-            const commitMessages = (event.payload?.commits || [])
-                .map(commit => commit?.message)
-                .filter(Boolean)
-                .map(message => message.replace(/\s+/g, ' ').trim());
-
-            let activityText = '';
-
-            if (commitMessages.length > 0) {
-                activityText = commitMessages[0];
-            }
-
-            if (!activityText) {
-                const commitCount = event.payload?.distinct_size || 1;
-                activityText = commitCount > 1
-                    ? `Pushed ${commitCount} updates to ${repoName}`
-                    : `Pushed a fresh update to ${repoName}`;
-            }
-
-            if (activityText.length > 36) {
-                activityText = activityText.substring(0, 33) + '...';
-            }
-
-            const date = new Date(event.created_at);
-            const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            const li = document.createElement('li');
-            li.style.marginBottom = "15px";
-            li.innerHTML = `
-        <div style="border-left: 3px solid #0ea5e9; padding-left: 12px;">
-            <strong style="display: block; color: #ffffff; font-size: 1.05rem;">${repoName}</strong>
-            <span style="font-size: 0.9rem; color: #e2e8f0;">${activityText}</span>
-            <br><span style="font-size: 0.75rem; opacity: 0.6; color: #cbd5e1;">${dateString} • ${timeString}</span>
-        </div>
-    `;
-            commitsContainer.appendChild(li);
-        });
-
+        const messages = await Promise.all(recentEvents.map(describeGithubEvent));
+        commitsContainer.replaceChildren(...recentEvents.map((event, index) => createActivityItem(event, messages[index])));
     } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-        // Only update innerHTML if commitsContainer was successfully found
-        if (commitsContainer) {
-            commitsContainer.innerHTML = '<li>Unable to load activity.</li>';
-        }
+        console.error('Error fetching GitHub data:', error);
+        commitsContainer.textContent = 'Unable to load activity.';
     }
 }
 
