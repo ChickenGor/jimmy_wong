@@ -114,13 +114,26 @@ document.addEventListener('keydown', (event) => {
 
 // Function to add a message to the chat UI
 function addMessage(text, sender) {
+    const row = document.createElement('div');
     const msgDiv = document.createElement('div');
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+    row.className = sender === 'user' ? 'message-row user-row' : 'message-row ai-row';
     msgDiv.classList.add('message');
     msgDiv.classList.add(sender === 'user' ? 'user-message' : 'ai-message');
     msgDiv.textContent = text;
 
-    chatHistory.appendChild(msgDiv);
+    if (sender === 'ai') {
+        const identity = document.createElement('div');
+        identity.className = 'assistant-identity';
+        identity.textContent = `Jimmy AI  ${time}`;
+        row.appendChild(identity);
+    }
+
+    row.appendChild(msgDiv);
+    chatHistory.appendChild(row);
     chatHistory.scrollTop = chatHistory.scrollHeight;
+    return msgDiv;
 }
 
 // Handle sending a message
@@ -135,12 +148,8 @@ async function handleSend() {
 
     // 1. Show "Jimmy-Bot is typing..."
     const typingId = "typing-" + Date.now();
-    const typingDiv = document.createElement('div');
-    typingDiv.classList.add('message', 'ai-message');
+    const typingDiv = addMessage("Jimmy AI is typing...", 'ai');
     typingDiv.setAttribute('id', typingId);
-    typingDiv.textContent = "Jimmy-Bot is typing..."; // More professional than "..."
-    chatHistory.appendChild(typingDiv);
-    chatHistory.scrollTop = chatHistory.scrollHeight;
 
     // 2. Add a small artificial delay so the typing indicator is visible
     // This makes it feel like the AI is actually "thinking"
@@ -150,10 +159,10 @@ async function handleSend() {
     try {
         const aiResponse = await getAIResponse(userText);
 
-        document.getElementById(typingId).remove();
+        document.getElementById(typingId)?.closest('.message-row')?.remove();
         addMessage(aiResponse, 'ai');
     } catch (error) {
-        document.getElementById(typingId).remove();
+        document.getElementById(typingId)?.closest('.message-row')?.remove();
         addMessage("Jimmy-Bot is currently taking a coffee break. Please email me at jwong0853@gmail.com!", 'ai');
     }
 }

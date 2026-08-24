@@ -274,24 +274,30 @@
 
         <div id="chatbot-window" class="hidden">
             <div class="chat-header">
-                <h3>Jimmy-Bot</h3>
+                <div class="chat-title">
+                    <span class="chat-brand-mark"><i class="fas fa-robot"></i></span>
+                    <div><h3>Ask Jimmy</h3><p>AI portfolio assistant</p></div>
+                </div>
                 <button id="close-chat" aria-label="Close chat">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
 
-            <div class="chat-quick-replies">
-                <button class="chip" onclick="sendQuickReply('Which projects are most relevant for a software engineering internship?')">Projects</button>
-                <button class="chip" onclick="sendQuickReply('Which technologies can Jimmy contribute with?')">Skills</button>
-                <button class="chip" onclick="sendQuickReply('When is Jimmy available for an internship?')">Availability</button>
-                <button class="chip" onclick="sendQuickReply('What type of role is Jimmy seeking?')">Role fit</button>
-                <button class="chip" onclick="sendQuickReply('How can I contact Jimmy?')">Contact</button>
-            </div>
-
             <div id="chat-history"></div>
 
+            <div class="chat-suggestions">
+                <p>You might also ask</p>
+                <div class="chat-quick-replies">
+                    <button class="chip" onclick="sendQuickReply('Which projects are most relevant for a software engineering internship?')">Projects</button>
+                    <button class="chip" onclick="sendQuickReply('Which technologies can Jimmy contribute with?')">Skills</button>
+                    <button class="chip" onclick="sendQuickReply('When is Jimmy available for an internship?')">Availability</button>
+                    <button class="chip" onclick="sendQuickReply('What type of role is Jimmy seeking?')">Role fit</button>
+                    <button class="chip" onclick="sendQuickReply('How can I contact Jimmy?')">Contact</button>
+                </div>
+            </div>
+
             <div class="chat-input-area">
-                <input id="chat-input" type="text" placeholder="Ask Jimmy-Bot..." />
+                <input id="chat-input" type="text" placeholder="Ask about Jimmy..." />
                 <button id="send-btn" aria-label="Send message">
                     <i class="fas fa-paper-plane"></i>
                 </button>
