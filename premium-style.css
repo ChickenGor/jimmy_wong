@@ -153,15 +153,19 @@ main { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding-bottom: 80
 .about-grid {
     display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: start;
 }
-.about-copy h3 {
+.about-copy h2 {
     font-size: clamp(1.4rem, 2.3vw, 2rem); margin-bottom: 14px; line-height: 1.25;
 }
-.about-copy p, .about-card p, .project-content p, .timeline-card p, .timeline-card span, .contact p { color: var(--text-muted); }
+.about-copy > p:not(.eyebrow), .about-card p, .project-content p, .timeline-card p, .timeline-card span, .contact p { color: var(--text-muted); }
 .about-card {
     padding: 22px; border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); box-shadow: var(--shadow);
 }
 .about-card p + p { margin-top: 14px; }
-.about-copy .github-activity-card { margin-top: 28px; max-width: none; }
+.about-details { display: grid; gap: 16px; margin: 28px 0 0; }
+.about-details div { border-left: 2px solid var(--accent); padding-left: 14px; }
+.about-details dt { color: var(--text-main); font-weight: 700; }
+.about-details dd { color: var(--text-muted); margin: 4px 0 0; }
+.about-grid > .github-activity-card { margin-top: 0; max-width: none; }
 
 .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 .project-card {
