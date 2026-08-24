@@ -1,6 +1,7 @@
 const model = "gemini-3.1-flash-lite";
 const allowedOrigins = new Set([
   "https://jimmy-wong.vercel.app",
+  "https://chickengor.github.io",
   "http://localhost:3000",
 ]);
 const requestLimit = 12;
