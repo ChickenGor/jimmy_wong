@@ -1,23 +1,3 @@
-const RESUME_CONTENT = `
-Jimmy Wong Jia Cheng - Computer Science Undergraduate (UTAR, Grad Jan 2027)
-Technical Skills:
-- Languages: Python, JavaScript, Dart, Java, C++, PHP
-- Frameworks: ReactJS, Node.js, Flutter, LangChain
-- AI/Cloud: AWS, Prompt Engineering, RAG, Gemini API, OpenAI API
-- Databases: MySQL, MongoDB, Firebase
-- Tools: Git, GitHub, REST APIs, Figma
-
-Project Highlights:
-1. EMERS: Mobile emergency response app using Flutter, RAG, and Machine Learning for fast info retrieval[cite: 18, 19, 21].
-2. Super LLM Agent: AI-driven developer tool using OpenAI/Gemini APIs for automated code generation and debugging[cite: 23, 24, 25].
-3. PosEmera: Full-stack POS system for hawkers using ReactJS, Node.js, and MySQL[cite: 27, 29, 30].
-4. Akumi: Personal development app with AI-driven growth recommendations[cite: 31, 33].
-5. MariBus: Real-time public bus tracking system using live geographic data[cite: 34, 35].
-
-Availability: Seeking final-semester software engineering internship starting October 2026.
-Contact: jwong0853@gmail.com
-`;
-
 // --- 1. Scroll Animation Logic ---
 // Select all elements that have the 'animate-on-scroll' class
 const animatedElements = document.querySelectorAll('.animate-on-scroll');
@@ -87,7 +67,7 @@ const closeChat = document.getElementById('close-chat');
 const sendBtn = document.getElementById('send-btn');
 const chatInput = document.getElementById('chat-input');
 const chatHistory = document.getElementById('chat-history');
-const API_URL = 'https://us-central1-jimmy-wong-portfolio.cloudfunctions.net/getChatResponse';
+const API_URL = 'https://jimmy-wong.vercel.app/api/chat';
 
 async function getAIResponse(userPrompt) {
     const response = await fetch(API_URL, {
@@ -103,16 +83,6 @@ async function getAIResponse(userPrompt) {
     const data = await response.json();
     return data.candidates?.[0]?.content?.parts?.[0]?.text || 'I could not generate a response right now.';
 }
-// Define the system instructions at the top so they are available to the function
-const SYSTEM_INSTRUCTION = `You are Jimmy-Bot, the professional AI assistant for Jimmy Wong Jia Cheng.
-Use this specific background information to answer all questions: ${RESUME_CONTENT}
-
-Guidelines:
-- If asked about skills or projects, reference the specific technologies listed in the data.
-- If asked about internship availability, confirm he is seeking a final-semester internship starting October 2026.
-- Maintain a professional, enthusiastic, and concise tone.
-- Always encourage recruiters to reach out to jwong0853@gmail.com.`;
-
 // Open and Close Chat
 if (chatToggle && chatWindow && chatInput) {
     chatToggle.addEventListener('click', () => {
@@ -167,7 +137,7 @@ async function handleSend() {
 
     // 3. API Call
     try {
-        const aiResponse = await getAIResponse(SYSTEM_INSTRUCTION + "\n\nUser Question: " + userText);
+        const aiResponse = await getAIResponse(userText);
 
         document.getElementById(typingId).remove();
         addMessage(aiResponse, 'ai');
