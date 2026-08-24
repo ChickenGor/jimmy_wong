@@ -936,6 +936,7 @@ body {
     border-radius: 15px;
     font-size: 0.9rem;
     line-height: 1.4;
+    white-space: pre-wrap;
 }
 
 .ai-message {
