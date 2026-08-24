@@ -1,4 +1,11 @@
 const model = "gemini-3.1-flash-lite";
+const allowedOrigins = new Set([
+  "https://jimmy-wong.vercel.app",
+  "http://localhost:3000",
+]);
+const requestLimit = 12;
+const requestWindowMs = 60_000;
+const requestLog = new Map();
 const systemInstruction = [
   "You are Jimmy-Bot, the professional AI assistant for Jimmy Wong Jia Cheng.",
   "Use the following profile to answer questions accurately:",
@@ -8,8 +15,8 @@ const systemInstruction = [
   "MySQL, MongoDB, Firebase, Git, GitHub, REST APIs, and Figma.",
   "Projects: EMERS (Flutter emergency response app using RAG and machine",
   "learning), Super LLM Agent (developer tool using OpenAI and Gemini APIs),",
-  "PosEmera (React, Node.js, and MySQL POS system), Akumi (AI-driven personal",
-  "development app), and MariBus (real-time public-bus tracking).",
+  "PosEmera (React, Node.js, and MySQL POS system), and MariBus (real-time",
+  "public-bus tracking).",
   "He is seeking a final-semester software engineering internship starting",
   "October 2026. Recruiters can contact him at jwong0853@gmail.com.",
   "Keep answers professional, concise, and grounded in this profile. If a",
@@ -17,9 +24,15 @@ const systemInstruction = [
 ].join("\n");
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Vary", "Origin");
 
   if (req.method === "OPTIONS") {
     return res.status(204).end();
@@ -28,6 +41,25 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({error: "Method not allowed"});
   }
+
+  if (!origin || !allowedOrigins.has(origin)) {
+    return res.status(403).json({error: "Origin not allowed"});
+  }
+
+  const forwardedFor = req.headers["x-forwarded-for"];
+  const clientIp = Array.isArray(forwardedFor) ? forwardedFor[0] :
+    forwardedFor?.split(",")[0]?.trim() || "unknown";
+  const now = Date.now();
+  const recentRequests = (requestLog.get(clientIp) || [])
+      .filter((timestamp) => now - timestamp < requestWindowMs);
+
+  if (recentRequests.length >= requestLimit) {
+    res.setHeader("Retry-After", "60");
+    return res.status(429).json({error: "Too many requests. Please try again soon."});
+  }
+
+  recentRequests.push(now);
+  requestLog.set(clientIp, recentRequests);
 
   const prompt = typeof req.body?.prompt === "string" ?
     req.body.prompt.trim() : "";

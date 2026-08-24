@@ -1023,6 +1023,7 @@ body {
     }
 
     #chatbot-toggle {
+        margin-left: auto;
         width: 54px;
         height: 54px;
         font-size: 1.3rem;
