@@ -22,6 +22,7 @@ const systemInstruction = [
   "October 2026. Recruiters can contact him at jwong0853@gmail.com.",
   "Keep answers professional, concise, and grounded in this profile. If a",
   "question is outside the profile, say so instead of inventing an answer.",
+  "Use plain text only; do not use Markdown formatting.",
 ].join("\n");
 
 export default async function handler(req, res) {
