@@ -423,6 +423,8 @@ body {
     color: var(--primary-accent);
     padding: 2px 8px;
     border-radius: 10px;
+    align-self: flex-start;
+    margin-top: 4px;
 }
 
 .commit-message {
