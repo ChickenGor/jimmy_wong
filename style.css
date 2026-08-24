@@ -903,6 +903,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--card-border);
+    flex-shrink: 0;
 }
 
 .chat-header h3 {
@@ -920,7 +921,8 @@ body {
 
 /* Chat History Area */
 #chat-history {
-    flex-grow: 1;
+    flex: 1 1 0;
+    min-height: 0;
     padding: 20px;
     overflow-y: auto;
     display: flex;
@@ -959,6 +961,7 @@ body {
     overflow-x: auto;
     /* Allows scrolling if you add more buttons */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
 }
 
 .chip {
@@ -984,6 +987,7 @@ body {
     gap: 10px;
     border-top: 1px solid var(--card-border);
     background: rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
 }
 
 #chat-input {
