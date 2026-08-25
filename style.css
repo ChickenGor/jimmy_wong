@@ -1462,6 +1462,58 @@ body {
     box-shadow: 0 7px 15px rgba(204, 111, 100, 0.24);
 }
 
+/* Dark backdrop with the same warm coral conversation accents. */
+#chatbot-window {
+    background: linear-gradient(160deg, #17161d 0%, #24202b 52%, #332537 100%);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 48px rgba(8, 7, 12, 0.42);
+}
+
+.chat-header,
+.chat-input-area,
+.chat-suggestions,
+.chat-quick-replies {
+    background: rgba(24, 22, 30, 0.88);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chat-header h3,
+.assistant-identity {
+    color: #f3b4aa;
+}
+
+.chat-title p,
+.chat-suggestions > p {
+    color: #c2bac0;
+}
+
+#close-chat {
+    color: #f8f1ef;
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+.ai-message {
+    background: rgba(255, 255, 255, 0.96);
+    color: #322b31;
+}
+
+.chip {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f6eeec;
+}
+
+.chip:hover {
+    background: rgba(232, 135, 121, 0.26);
+    border-color: #e88779;
+}
+
+#chat-input {
+    background: rgba(10, 9, 13, 0.64);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #fffaf8;
+}
+
 /* =========================================
    Smartphone Optimization (max-width: 480px)
 ========================================= */
