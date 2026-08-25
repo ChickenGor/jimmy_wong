@@ -1360,6 +1360,29 @@ body {
     }
 }
 
+/* Keep the mobile composer within the viewport when the input is focused. */
+@media (max-width: 480px) {
+    .chat-input-area {
+        width: 100%;
+        min-width: 0;
+        gap: 12px;
+    }
+
+    #chat-input {
+        width: 0;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    #send-btn {
+        flex: 0 0 52px;
+        width: 52px;
+        min-width: 52px;
+        height: 52px;
+        padding: 0;
+    }
+}
+
 /* =========================================
    Smartphone Optimization (max-width: 480px)
 ========================================= */
