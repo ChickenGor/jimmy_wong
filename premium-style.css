@@ -153,6 +153,7 @@ main { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding-bottom: 80
 .about-grid {
     display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: start;
 }
+.about-grid > * { min-width: 0; }
 .about-copy h2 {
     font-size: clamp(1.4rem, 2.3vw, 2rem); margin-bottom: 14px; line-height: 1.25;
 }
@@ -209,7 +210,7 @@ main { width: min(1160px, calc(100% - 32px)); margin: 0 auto; padding-bottom: 80
 .contact-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 footer { text-align: center; color: var(--text-muted); padding: 20px 12px 40px; font-size: 0.92rem; }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .hero, .about-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; }
     .hero { gap: 28px; padding-top: 20px; }
     .hero-portrait { order: 1; margin-bottom: 8px; }
@@ -229,7 +230,7 @@ footer { text-align: center; color: var(--text-muted); padding: 20px 12px 40px; 
 }
 
 /* Keep the About content inside narrow mobile viewports. */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     main {
         width: calc(100% - 32px);
         max-width: 100%;
