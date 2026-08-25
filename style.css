@@ -1383,6 +1383,75 @@ body {
     }
 }
 
+/* Jimmy-Bot: warm glass palette inspired by the portfolio reference. */
+#chatbot-window {
+    background: #f3efef;
+    border-color: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 18px 42px rgba(113, 82, 91, 0.2);
+}
+
+.chat-header,
+.chat-input-area,
+.chat-suggestions,
+.chat-quick-replies {
+    background: #f8f5f3;
+    border-color: rgba(102, 81, 91, 0.12);
+}
+
+.chat-header h3,
+.assistant-identity {
+    color: #6d3e50;
+}
+
+.chat-title p,
+.chat-suggestions > p {
+    color: #7e7379;
+}
+
+.chat-brand-mark {
+    background: #f2b1a7;
+    color: #6d3e50;
+}
+
+#close-chat {
+    color: #4a3d43;
+    border-color: rgba(109, 62, 80, 0.16);
+}
+
+.ai-message {
+    background: rgba(255, 255, 255, 0.9);
+    color: #373036;
+    box-shadow: 0 8px 18px rgba(108, 85, 95, 0.08);
+}
+
+.user-message {
+    background: #e88779;
+    color: #fffdfc;
+}
+
+.chip {
+    background: rgba(255, 255, 255, 0.76);
+    border-color: rgba(121, 95, 110, 0.16);
+    color: #493b42;
+}
+
+.chip:hover {
+    background: #f6d6cf;
+    border-color: #e5a095;
+}
+
+#chat-input {
+    background: #ffffff;
+    border-color: rgba(121, 95, 110, 0.2);
+    color: #373036;
+}
+
+#send-btn {
+    background: #e88779;
+    color: #ffffff;
+    box-shadow: 0 7px 15px rgba(204, 111, 100, 0.24);
+}
+
 /* =========================================
    Smartphone Optimization (max-width: 480px)
 ========================================= */
