@@ -227,3 +227,49 @@ footer { text-align: center; color: var(--text-muted); padding: 20px 12px 40px; 
     .contact-actions, .hero-actions { justify-content: center; }
     .hero h1 { font-size: clamp(2.1rem, 9vw, 3rem); }
 }
+
+/* Keep the About content inside narrow mobile viewports. */
+@media (max-width: 900px) {
+    main {
+        width: calc(100% - 32px);
+        max-width: 100%;
+    }
+
+    .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        min-width: 0;
+    }
+
+    .about-copy,
+    .github-activity-card {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .about-copy h2,
+    .about-copy p,
+    .about-details dd,
+    .activity-header,
+    .commit-message {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 56px 0;
+    }
+
+    .about-copy h2 {
+        font-size: 1.45rem;
+    }
+
+    .github-activity-card {
+        padding: 18px;
+    }
+
+    .activity-header {
+        font-size: 1rem;
+    }
+}
