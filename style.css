@@ -1514,6 +1514,29 @@ body {
     color: #fffaf8;
 }
 
+#chatbot-toggle {
+    background: linear-gradient(145deg, #e88779, #c95e73);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 25px rgba(109, 47, 69, 0.38);
+    position: relative;
+}
+
+#chatbot-toggle::after {
+    content: "AI";
+    position: absolute;
+    right: -6px;
+    bottom: -4px;
+    min-width: 20px;
+    padding: 2px 4px;
+    border: 2px solid #17161d;
+    border-radius: 8px;
+    background: #f7d6cf;
+    color: #6d3e50;
+    font-size: 0.56rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
 /* =========================================
    Smartphone Optimization (max-width: 480px)
 ========================================= */
