@@ -980,6 +980,16 @@ body {
 .chat-suggestions > p { margin: 0 0 8px; color: #9eb0ad; font-size: 0.8rem; }
 .chat-suggestions .chat-quick-replies { padding: 0; border: 0; }
 
+/* Keep the suggestion row swipeable without showing a browser scrollbar. */
+.chat-quick-replies {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.chat-quick-replies::-webkit-scrollbar {
+    display: none;
+}
+
 .chip {
     background: #1a2927;
     border: 1px solid rgba(94, 234, 212, 0.2);
